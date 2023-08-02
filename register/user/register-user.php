@@ -52,7 +52,7 @@
                         <form action="register-user.php" method="post" name="registerform" id="registerform" style="display: inline-block;">                        
                             <div class="row input-group mb-3">
                                 <div class="col-lg-4 input-group-append">
-                                    <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Username:</span>
+                                    <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Email:</span>
                                 </div>
                                 <div class="col-lg-8">
                                     <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email"
