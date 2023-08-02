@@ -77,7 +77,7 @@ if(!isset($_SESSION['user_id']))
     {
         try
         {
-            $query = "SELECT apple_id  FROM apples WHERE (apple_id=?) or (apple_row=? and apple_column=?)";
+            $query = "SELECT apple_id  FROM apples WHERE (apple_id=?) or (row=? and col=?)";
             $q = mysqli_stmt_init($dbcon);
             mysqli_stmt_prepare($q, $query);
             //use prepared statement to ensure that only text is inserted
@@ -91,7 +91,7 @@ if(!isset($_SESSION['user_id']))
             {                
                 
                 //Make the query:
-                $query = "INSERT INTO apples (id, apple_id, yop, breed, apple_row, apple_column, latitude, longitude)";                
+                $query = "INSERT INTO apples (id, apple_id, yop, breed, row, col, latitude, longitude)";                
                 $query .= "VALUES(' ', ?, ?, ?, ?, ?, ?, ?)";
                 $q = mysqli_stmt_init($dbcon);
                 mysqli_stmt_prepare($q, $query);
@@ -134,14 +134,14 @@ if(!isset($_SESSION['user_id']))
         }
         catch(Exception $e) // We finally handle any problems here
         {
-            //print "An Exception occurred. Message: " . $e->getMessage();
-            $internal_error = "The system is busy please try later";
+            print "An Exception occurred. Message: " . $e->getMessage();
+            //$internal_error = "The system is busy please try later";
             
         }
         catch(Error $e)
         {
-            //print "An Error occurred. Message: " . $e->getMessage();            
-            $internal_error = "The system is busy please try later";
+            print "An Error occurred. Message: " . $e->getMessage();            
+            //$internal_error = "The system is busy please try later";
         }
     }
     else //Report the  errors

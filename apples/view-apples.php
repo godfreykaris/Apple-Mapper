@@ -97,8 +97,8 @@ if(!isset($_SESSION['user_id']))
                                             $apple_id = htmlspecialchars($row['apple_id'], ENT_QUOTES);
                                             $yop = htmlspecialchars($row['yop'], ENT_QUOTES);
                                             $breed = htmlspecialchars($row['breed'], ENT_QUOTES);
-                                            $m_row = htmlspecialchars($row['apple_row'], ENT_QUOTES);
-                                            $column = htmlspecialchars($row['apple_column'], ENT_QUOTES);
+                                            $m_row = htmlspecialchars($row['row'], ENT_QUOTES);
+                                            $column = htmlspecialchars($row['col'], ENT_QUOTES);
                                             $longitude = htmlspecialchars($row['longitude'], ENT_QUOTES);
                                             $latitude = htmlspecialchars($row['latitude'], ENT_QUOTES);
                                             
