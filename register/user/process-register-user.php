@@ -49,7 +49,7 @@
     {
         try
         {
-            $query = "SELECT user_id , email FROM users WHERE (email=?)";
+            $query = "SELECT email FROM users WHERE (email=?)";
             $q = mysqli_stmt_init($dbcon);
             mysqli_stmt_prepare($q, $query);
             //use prepared statement to ensure that only text is inserted
@@ -59,39 +59,64 @@
             mysqli_stmt_execute($q);
             $result = mysqli_stmt_get_result($q);
             
-            if(mysqli_num_rows($result) == 0 )
+            if(mysqli_num_rows($result) == 1 )
             {
                 
-                //Register the user in the database...
-                //Hash password current 60 characters but can increase
-                $hashed_passcode = password_hash($password, PASSWORD_DEFAULT);
-                //require('mysqli_connect.php'); //Connect to the db.
-                //Make the query:
-                $query = "INSERT INTO users (user_id, email, password)";                
-                $query .= "VALUES(' ', ?, ?)";
+
+                $query = "SELECT user_id, email FROM users_register WHERE (email=?)";
                 $q = mysqli_stmt_init($dbcon);
                 mysqli_stmt_prepare($q, $query);
                 //use prepared statement to ensure that only text is inserted
                 //bind fields to SQL Statement
-                
-                mysqli_stmt_bind_param($q, 'ss',$emailtrim, $hashed_passcode);
+                mysqli_stmt_bind_param($q, 's',$emailtrim);
                 // execute query
                 mysqli_stmt_execute($q);
+                $result = mysqli_stmt_get_result($q);
 
-                if(mysqli_stmt_affected_rows($q) == 1) //One record inserted
+                if(mysqli_num_rows($result) == 1 )
                 {
+                    //Register the user in the database...
+                    //Hash password current 60 characters but can increase
+                    $hashed_passcode = password_hash($password, PASSWORD_DEFAULT);
+                    //require('mysqli_connect.php'); //Connect to the db.
+                    //Make the query:
+                    $query = "INSERT INTO users (user_id, email, password)";                
+                    $query .= "VALUES(' ', ?, ?)";
+                    $q = mysqli_stmt_init($dbcon);
+                    mysqli_stmt_prepare($q, $query);
+                    //use prepared statement to ensure that only text is inserted
+                    //bind fields to SQL Statement
                     
-                    header("location:../../index.php");                    
+                    mysqli_stmt_bind_param($q, 'ss',$emailtrim, $hashed_passcode);
+                    // execute query
+                    mysqli_stmt_execute($q);
+
+                    if(mysqli_stmt_affected_rows($q) == 1) //One record inserted
+                    {
+
+                        header("location:../../index.php");                    
+                    }
+                    else //If it did not run OK.
+                    {                            
+                        //Debugging message below do not use in production
+                        //echo '<p>' . mysqli_error($dbcon) . '<br><br>Query: ' . $query . '</p>';
+
+                        //Public message:
+                        $internal_error = "The system is busy please try later.";
+
+                        mysqli_close($dbcon); // Close the database connection.
+                        //exit();
+                    }
+
                 }
-                else //If it did not run OK.
-                {                            
-                    //Debugging message below do not use in production
-                    //echo '<p>' . mysqli_error($dbcon) . '<br><br>Query: ' . $query . '</p>';
-
+                else
+                {
                     //Public message:
-                    $internal_error = "The system is busy please try later.";
-
+                    $user_exists = "You are already registered.";
+                                    
+                                    
                     mysqli_close($dbcon); // Close the database connection.
+                    
                     //exit();
                 }
 
@@ -100,7 +125,7 @@
             else
             {
                 //Public message:
-                $user_exists = "You are already registered.";
+                $internal_error = "Your details are not found. Contact the Apple Farm.";
                                 
                                 
                 mysqli_close($dbcon); // Close the database connection.
@@ -111,7 +136,7 @@
         }
         catch(Exception $e) // We finally handle any problems here
         {
-            //print "An Exception occurred. Message: " . $e->getMessage();
+            print "An Exception occurred. Message: " . $e->getMessage();
             $internal_error = "The system is busy please try later";
             
         }
