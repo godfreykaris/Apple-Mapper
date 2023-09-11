@@ -84,10 +84,10 @@
 
                             <div class="row input-group mb-3">
 
-                                <div class="col-lg-4 input-group-append">
-                                    <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Password:</span>
+                                <div class="col-lg-5 input-group-append">
+                                    <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Confirm Password:</span>
                                 </div>
-                                <div class="col-lg-8">
+                                <div class="col-lg-7">
                                     <input type="password" class="form-control" id="password2" name="password2" placeholder="Confirm Password" minlength="8"
                                                 maxlength="12" required
                                                 value="<?php if(isset($_POST['password2'])) echo htmlspecialchars($_POST['password2'], ENT_QUOTES); ?>">

@@ -1,3 +1,11 @@
+<?php
+if(session_status() !== PHP_SESSION_ACTIVE) session_start();
+if(!isset($_SESSION['user_id']))
+{
+    header("Location: ../index.php");
+    exit();
+}
+?>
 
 <?php
 //This script is a query that INSERTs a record in the users table.
@@ -97,7 +105,7 @@
         }
         catch(Exception $e) // We finally handle any problems here
         {
-            print "An Exception occurred. Message: " . $e->getMessage();
+            //print "An Exception occurred. Message: " . $e->getMessage();
             $internal_error = "The system is busy please try later";
             
         }

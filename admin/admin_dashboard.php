@@ -2,7 +2,7 @@
 if(session_status() !== PHP_SESSION_ACTIVE) session_start();
 if(!isset($_SESSION['user_id']))
 {
-    header("Location: ../../index.php");
+    header("Location: ../index.php");
     exit();
 }
 ?>
@@ -39,10 +39,10 @@ if(!isset($_SESSION['user_id']))
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">                                                  
                         <li class="nav-item">
-                            <a class="nav-link" style="color:rgb(236,132,17);" href="../../apples/view-apples.php">View Apples</a>
+                            <a class="nav-link" style="color:rgb(236,132,17);" href="../apples/view-apples.php">View Apples</a>
                         </li>                            
                         <li class="nav-item">
-                            <a class="nav-link" style="color:rgb(236,132,17);" href="./logout.php">Logout</a>
+                            <a class="nav-link" style="color:rgb(236,132,17);" href="../logout.php">Logout</a>
                         </li>                        
                     </ul>
                 </div>
@@ -52,13 +52,12 @@ if(!isset($_SESSION['user_id']))
     
         <div class="container" style="margin-top: 80px; margin-bottom: 80px; max-width: 400px;">
             <div class="card mb-3">
-                <div class="card-body">
+                <div class="card-body text-center">
                     <h5 class="card-title">Users</h5>
                     <p class="card-text">Add, Edit or Delete Users</p>
+                    
                     <a href="add_user.php" class="btn btn-primary">Add User</a>
-                    <a href="#" class="btn btn-primary">Edit User</a>
-                    <a href="#" class="btn btn-primary">Delete User</a>   
-
+                    <a href="view_users.php" class="btn btn-primary">View Users</a>
                 </div>
             </div>
 

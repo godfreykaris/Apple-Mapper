@@ -1,3 +1,11 @@
+<?php
+if(session_status() !== PHP_SESSION_ACTIVE) session_start();
+if(!isset($_SESSION['user_id']))
+{
+    header("Location: ../index.php");
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -12,22 +20,7 @@
            $path = __DIR__;
            require_once("../includes/external_file_links.php");
         ?>
-        
-        <noscript><h3 style="text-align:center">Your browser does not support JavaScript!<br>Enable JavaScript in your browser.</h3></noscript>      
-        
-        <script>
-                    const togglePassword = document.querySelector('#togglePassword');
-                    const password = document.querySelector('#id_password');
-
-                    togglePassword.addEventListener('click', function (e) {
-                      // toggle the type attribute
-                      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                      password.setAttribute('type', type);
-                      // toggle the eye slash icon
-                      this.classList.toggle('fa-eye-slash');
-            });
-        </script>
-        
+                
     </head>
     <body style="background-color:rgb(26, 255, 26)"> 
             
@@ -45,7 +38,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">                                                  
             <li class="nav-item">
-                <a class="nav-link" style="color:rgb(236,132,17);" href="./admin-landing.php">Dashboard</a>
+                <a class="nav-link" style="color:rgb(236,132,17);" href="./admin_dashboard.php">Dashboard</a>
             </li>                            
             <li class="nav-item">
                 <a class="nav-link" style="color:rgb(236,132,17);" href="../logout.php">Logout</a>
