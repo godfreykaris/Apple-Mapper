@@ -35,7 +35,7 @@
             {
                 //Retrieve the user_id, email, password for that
                 //email/password combination
-                $query = "SELECT user_id, email, password FROM users WHERE  email=?";
+                $query = "SELECT user_id, email, password, role FROM users_register WHERE  email=?";
                 $q = mysqli_stmt_init($dbcon);
                 mysqli_stmt_prepare($q, $query);
                 //use prepared statement to ensure that only text is inserted
@@ -56,14 +56,18 @@
                             session_start();
                         //Ensure that the user id is an integer
                         $_SESSION['user_id'] = (int)$row[0];
-                        
-                        header('Location: register/apple/register-apple.php');
+                        $_SESSION['role'] = (int)$row[3];
+
+                        if($_SESSION['role'] === 1)                        
+                            header('Location:admin/admin_dashboard.php');
+                        elseif($_SESSION['role'] === 2)                        
+                            header('Location: register/apple/register-apple.php');
                         //Make the browser load either the members or the admin page
                     }
                     else //no password match was made
                     {
                         $errors[] = 'Incorrect Password!';
-                        $incorrect_password = $row[2];//'Incorrect Password!';
+                        $incorrect_password = 'Incorrect Password!';
                     }
                 }
                 else
