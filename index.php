@@ -3,123 +3,144 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sign In</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+        <link rel="stylesheet" href="index.css">
+
+        <title>Home</title>
         
         <link rel="icon" href="images/apple.jpg" type="image/jpg">
 
         <?php
            $path = __DIR__;
-           require_once("includes/external_file_links.php");
-        ?>
-        
-        <noscript><h3 style="text-align:center">Your browser does not support JavaScript!<br>Enable JavaScript in your browser.</h3></noscript>      
-        
-        <script>
-                    const togglePassword = document.querySelector('#togglePassword');
-                    const password = document.querySelector('#id_password');
+           require_once("includes/external_file_links.php"); 
+           
+           $isSignedIn = isset($_SESSION['isSignedIn']) && $_SESSION['isSignedIn'];
 
-                    togglePassword.addEventListener('click', function (e) {
-                      // toggle the type attribute
-                      const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-                      password.setAttribute('type', type);
-                      // toggle the eye slash icon
-                      this.classList.toggle('fa-eye-slash');
-            });
-        </script>
+        ?>       
+
+        <noscript><h3 style="text-align:center">Your browser does not support JavaScript!<br>Enable JavaScript in your browser.</h3></noscript> 
         
     </head>
     <body style="background-color:rgb(26, 255, 26)"> 
     
         <!--Validate Input-->
         <?php
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            require('login/process-login.php');
-        } // End of the main Submit conditional.
+            include 'header/navbar.php';
         ?>
-    
-        <div class="container" style="background-color:rgb(4,38,84);border-radius:25px; margin-top:80px; margin-bottom:80px; max-width:400px;">
-            <div class="d-flex justify-content-center h-100">
-                <div>                                
-                    <div class="d-flex justify-content-center" style="margin-top:10px;margin-bottom:10px;">
-                        <img  class="rounded-circle" src="images/leafy.jpg" width="170px" height="150px" style="background-color:rgb(255,255,255);" alt="Logo">
-                    </div>
-                    <div class="d-flex justify-content-center" style="margin-top:10px;margin-bottom:10px;">
-                        <h2 style="color:rgb(236,132,17)">Login</h2>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <form action="index.php" method="post" name="loginform" id="loginform" style="display: inline-block;">                        
-                            <div class="row input-group mb-3">
-                                <div class="col-lg-4 input-group-append">
-                                    <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Email:</span>
-                                </div>
-                                <div class="col-lg-8">
-                                    <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email"
-                                            maxlength="60" required 
-                                            value="<?php if(isset($_POST['email'])) echo htmlspecialchars($_POST['email'], ENT_QUOTES); ?>">
-                                </div>
-
-                            </div>
-
-                            <div class="text-center" style="color:red;">
-                                <?php if(isset($invalid_email)) echo $invalid_email;
-                                        $invalid_email = "";    
-                                ?>                               
-                            </div>
-
-                            <div class="row input-group mb-3">
-
-                                <div class="col-lg-4 input-group-append">
-                                    <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Password:</span>
-                                </div>
-                                <div class="col-lg-8">
-                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password" minlength="8"
-                                                maxlength="12" required
-                                                value="<?php if(isset($_POST['password'])) echo htmlspecialchars($_POST['password'], ENT_QUOTES); ?>">
-                                                <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer; color:black;" ></i>
-                                </div>                 
-
-                            </div>
-
-                            
-                            <div class="text-center" style="color:red;">
-                                <?php if(isset($incorrect_password)) 
-                                        {
-                                            echo $incorrect_password;
-                                            $incorrect_password = "";
-                                        }                                                                                   
-                                ?>   
-                            </div>
-                            
-                            <div class="text-center" style="color:red;">
-                                <?php 
-                                        if(isset($internal_error)) 
-                                       {
-                                           echo $internal_error;
-                                           $internal_error = "";
-                                       }
-                                            
-                                ?>                               
-                            </div>
-
-                            <div class="d-flex justify-content-center mt-3"> 
-                                <input id="submit" class="btn btn-primary rounded-pill" type="submit" name="submit" value="Login" style="background-color:rgb(236,132,17);margin-bottom:5px;">            
-                            </div>                      
-                            
-                            <div class="mt-4">                                
-                                <div class="d-flex justify-content-center" style="margin-bottom:40px; ">
-                                    <a href="register/user/register-user.php" style="color:rgb(254,244,45); text-decoration: none;">Create An Account</a>
+        <main>
+            <div class="container mt-5 mb-5" style="background-color: rgb(4,38,84); border-radius: 25px;">
+                <div class="intro mt-5 mb-5 text-center">                                
+                    <h1 class="text-white">APPLE MAPPER</h1>
+                    <p class="text-white">Apple Farm Moi University</p>
+                    <button class="btn btn-primary"><a href="#about-section" class="text-white text-decoration-none">Learn More</a></button>            
+                </div>
+                <div class="achievements text-center text-white">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="work mb-4">
+                                <i class="fas fa-atom"></i>
+                                <p class="work-heading">Projects</p>
+                                <p class="work-text">
+                                    <b style="color: aqua;">We ensure these projects are successful:</b>
                                     <br>
-                                </div>
+                                    - Planting Seedlings: Record the locations where you've planted apple seedlings, helping you keep a comprehensive record of your orchard's growth.
+                                    <br>
+                                    - Grafted Apples: Monitor the progress of grafted apple trees, ensuring their health and productivity.
+                                    <br>
+                                    - Disease Tracking: Apple tree images are used to track healthy apples.
+                                </p>
                             </div>
-                                    
-                        </form>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="work mb-4">
+                                <i class="fas fa-skiing"></i>
+                                <p class="work-heading">Community</p>
+                                <p class="work-text">
+                                    <b style="color: aqua;">We maintain a close relation with the community with an aim to:</b>
+                                    <br>
+                                    - Connect with fellow farmers to share insights and experiences.
+                                    <br>
+                                    - Organize community events and activities related to apple farming.
+                                    <br>
+                                    - Stay updated on important news and developments in the apple farming industry.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
-        </div>
+
+            <div class="container about-me" id="about-section">
+                <div class="row justify-content-center align-items-center">
+                    <div class="about-me-text">
+                        <h2 class="text-center" style="text-emphasis-color: white;">About</h2>
+                        <p>Welcome to our Apple Farming Project! Our journey into the world of apple farming began in the year 2020 when we embarked on an ambitious endeavor to cultivate apples on a sprawling 80-acre piece of land. Nestled in the picturesque surroundings of Moi University, our farm has since become a hub of innovation, sustainability, and agricultural excellence.</p>
+
+                        <p>Our commitment to apple farming goes beyond mere cultivation; it's a dedication to quality, sustainability, and community. We believe that apples not only provide a delicious and nutritious source of food but also serve as a symbol of growth and abundance.</p>
+
+                        <p>Over the years, we have meticulously cared for our apple trees, nurturing them from tender seedlings into thriving orchards. Our practices include careful planting, grafting, and continuous monitoring to ensure the health and vitality of our apple trees. We employ cutting-edge technology and scientific expertise to optimize every aspect of our farming process, from soil management to pest control.</p>
+
+                        <p>But our story is not just about apples; it's also about community. We are proud to be part of the vibrant Moi University community, where we collaborate with fellow farmers, researchers, and enthusiasts. Through knowledge sharing and community engagement, we have built a network of individuals who are equally passionate about sustainable agriculture and the bountiful harvests it can yield.</p>
+
+                        <p>Our apple farming journey has been a rewarding one, marked by challenges and triumphs alike. We invite you to join us on this exciting adventure as we continue to explore new horizons in apple farming. Whether you are a fellow farmer, an apple enthusiast, or simply curious about the art of cultivating this beloved fruit, our project is open to all.</p>
+
+                        <p>Thank you for being a part of our story. Together, we aim to make our apple farm not just a place of cultivation but a symbol of growth, innovation, and a greener, healthier future.</p>
+                    </div>
+                </div>              
+            </div>
+
+            <div class="d-flex justify-content-center mt-4 about-me mt-5 mb-5">
+                <div class="row">
+                    <div class="col-md-6 mb-3 mb-md-0">
+                        <img src="images/logo.jpg" alt="me" class="img-fluid">
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <img src="images/apples.jpg" alt="me" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="footer bg-dark text-white py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="copy text-center">&copy; 2023 Developer</div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bottom-links">
+                            <div class="row">
+                                <div class="col-md-5 col-12">
+                                    <span style="color: rgb(26, 255, 26); text-decoration: underline;">Quick Links</span>
+                                    <a href="#" class="text-white d-block text-decoration-none">Home</a>
+                                    <a href="/about/about.php" class="text-white d-block text-decoration-none">About</a>
+                                </div>
+                                
+                                <div class="col-md-5 col-12" id="contact">
+                                    <span style="color: rgb(26, 255, 26); text-decoration: underline;">Contact</span>
+                                    <a href="tel:0110987678" class="text-white d-block text-decoration-none">0110987678</a>
+                                    <a href="mailto:applemapper@gmail.com" class="text-white d-block text-decoration-none">applemapper@gmail.com</a>
+                                </div>
+                                <br/>
+                                <div class="col-md-2 col-12">
+                                    <span style="color: rgb(26, 255, 26); text-decoration: underline;">Socials</span>
+                                    <a href="https://www.facebook.com" class="text-white d-block text-decoration-none"><i class="fab fa-facebook"></i></a>
+                                    <a href="https://www.x.com" class="text-white d-block text-decoration-none"><i class="fab fa-twitter"></i></a>
+                                    <a href="https://www.instagram.com" class="text-white d-block text-decoration-none"><i class="fab fa-instagram"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+     
        
     </body>
 </html>
