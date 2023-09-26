@@ -98,7 +98,11 @@ if(!isset($_SESSION['user_id']))
                                             $yop = htmlspecialchars($row['yop'], ENT_QUOTES);
                                             $breed = htmlspecialchars($row['breed'], ENT_QUOTES);
                                             $m_row = htmlspecialchars($row['row'], ENT_QUOTES);
+<<<<<<< HEAD
                                             $col = htmlspecialchars($row['col'], ENT_QUOTES);
+=======
+                                            $column = htmlspecialchars($row['col'], ENT_QUOTES);
+>>>>>>> origin/main
                                             $longitude = htmlspecialchars($row['longitude'], ENT_QUOTES);
                                             $latitude = htmlspecialchars($row['latitude'], ENT_QUOTES);
                                             
@@ -107,7 +111,11 @@ if(!isset($_SESSION['user_id']))
                                                    '<td>' . $yop . '</td>
                                                     <td>' . $breed . '</td>
                                                     <td>' . $m_row . '</td>
+<<<<<<< HEAD
                                                     <td>' .$col . '</td>                                                      
+=======
+                                                    <td>' .$column . '</td>                                                      
+>>>>>>> origin/main
                                                     <td>' . $longitude . '</td>
                                                     <td>' . $latitude . '</td>  
                                                   </tr>';

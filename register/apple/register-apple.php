@@ -69,6 +69,43 @@ if(!isset($_SESSION['user_id']))
                     </div>
                     <div class="d-flex justify-content-center">
                         <form action="register-apple.php" method="post" name="appleform" id="appleform" style="display: inline-block;">                        
+<<<<<<< HEAD
+=======
+                            
+                            <div class="text-center" style="color:red;">
+                                <?php 
+                                        if(isset($internal_error)) 
+                                       {
+                                           echo $internal_error;
+                                           $internal_error = "";
+                                       }
+                                            
+                                ?>                               
+                            </div>
+
+                            <div class="text-center" style="color:cyan;">
+                                <?php 
+                                        if(isset($success)) 
+                                        {            
+                                            echo  $success;
+                                            $success = "";
+                                        }
+                                            
+                                ?>                               
+                            </div>
+                            
+                            <div class="text-center mb-3" style="color:red;">
+                                <?php 
+                                        if(isset($apple_id_exist)) 
+                                       {
+                                           echo $apple_id_exist;
+                                           $apple_id_exist = "";
+                                       }
+                                            
+                                ?>                               
+                            </div>
+
+>>>>>>> origin/main
                             <div class="row input-group mb-3">
                                 <div class="col-lg-4 input-group-append">
                                     <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Apple ID:</span>
@@ -84,6 +121,7 @@ if(!isset($_SESSION['user_id']))
                                                       
 
                             <div class="row input-group mb-3">
+<<<<<<< HEAD
 
                                 <div class="col-lg-4 input-group-append">
                                     <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">YOP:</span>
@@ -98,16 +136,40 @@ if(!isset($_SESSION['user_id']))
                             </div>
 
                             <div class="row input-group mb-3">
+=======
+                                <div class="col-lg-5 input-group-append">
+                                    <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Year of planting:</span>
+                                </div>
+                                <div class="col-lg-7">
+                                    <input type="date" class="form-control" id="yop" name="yop" placeholder="YYYY-MM-DD"
+                                        required
+                                        value="<?php if(isset($_POST['yop'])) echo htmlspecialchars($_POST['yop'], ENT_QUOTES); ?>">
+                                </div>
+                            </div>
+
+
+                            <div class="row input-group mb-3">
+
+>>>>>>> origin/main
                                 <div class="col-lg-4 input-group-append">
                                     <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Breed:</span>
                                 </div>
                                 <div class="col-lg-8">
+<<<<<<< HEAD
                                     <select class="form-select" id="breed" name="breed" required>
                                         <option value="" disabled selected>Select Breed</option>
                                     </select>
                                 </div>
                             </div>
 
+=======
+                                    <input type="text" class="form-control" id="breed" name="breed" placeholder="Enter breed"
+                                                maxlength="20" required
+                                                value="<?php if(isset($_POST['breed'])) echo htmlspecialchars($_POST['breed'], ENT_QUOTES); ?>">
+                                </div>                 
+
+                            </div>   
+>>>>>>> origin/main
                             
                             <div class="row input-group mb-3">
 
@@ -190,8 +252,6 @@ if(!isset($_SESSION['user_id']))
                                 ?>                               
                             </div>
 
-                            
-
                             <div class="d-flex justify-content-center mt-3" style="margin-bottom:40px"> 
                                 <input id="submit" class="btn btn-primary rounded-pill" style="width:200px;" type="submit" name="submit" value="Register Apple" style="background-color:rgb(236,132,17);margin-bottom:5px;">            
                             </div>            
@@ -247,10 +307,6 @@ if(!isset($_SESSION['user_id']))
                         console.error("Error fetching breed options: " + error);
                     });
             });
-
-
-
-            
         </script>
     </body>
 </html>

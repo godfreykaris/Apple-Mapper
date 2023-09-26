@@ -10,7 +10,11 @@
     {   
         if($create_path == true)
             $relative_path = $relative_path . "../";     
+<<<<<<< HEAD
         if($tok == "applemapper")
+=======
+        if($tok == "apple-mapper")
+>>>>>>> origin/main
             $create_path = true;
         
         $tok = strtok("\\");

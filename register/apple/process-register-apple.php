@@ -134,14 +134,14 @@ if(!isset($_SESSION['user_id']))
         }
         catch(Exception $e) // We finally handle any problems here
         {
-            //print "An Exception occurred. Message: " . $e->getMessage();
-            $internal_error = "The system is busy please try later";
+            print "An Exception occurred. Message: " . $e->getMessage();
+            //$internal_error = "The system is busy please try later";
             
         }
         catch(Error $e)
         {
-            //print "An Error occurred. Message: " . $e->getMessage();            
-            $internal_error = "The system is busy please try later";
+            print "An Error occurred. Message: " . $e->getMessage();            
+            //$internal_error = "The system is busy please try later";
         }
     }
     else //Report the  errors

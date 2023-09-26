@@ -1,13 +1,28 @@
+<?php
+if(session_status() !== PHP_SESSION_ACTIVE) session_start();
+if(!isset($_SESSION['user_id']))
+{
+    header("Location: ../index.php");
+    exit();
+}
+?>
 
 <?php
 //This script is a query that INSERTs a record in the users table.
 //Check that form has been submitted:
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        require('../../mysqli_connect.php'); //Connect to the db
+        require_once('../mysqli_connect.php'); //Connect to the db
     }
 
     $errors = array(); //Initialize an error array.
+
+    $nametrim = trim(htmlspecialchars($_POST['name'], ENT_QUOTES));
+    
+    if(empty($nametrim) || (strlen($nametrim) > 60))
+    {
+        $errors[] = 'Please enter a valid name.';
+    }
 
     //Check for a an email address:
     $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
@@ -23,47 +38,37 @@
         $errors[] = 'Please enter valid email address.';
     }  
 
-    //Check for a password and match against the confirmed password:
-    $password1trim = trim(htmlspecialchars($_POST['password1'], ENT_QUOTES));
-    
-    if(empty($password1trim))
+    $user_id = filter_var($_POST['id'], FILTER_VALIDATE_INT);
+
+    if ($user_id === false || $user_id <= 0) 
     {
-        $errors[] = 'Please enter a valid password.';
+        // Handle the case where the user's ID is not valid or missing
+        $errors[] = 'Invalid user ID.';
     }
-    else
-    {
-        $password2trim = trim(htmlspecialchars($_POST['password2'], ENT_QUOTES));
-        if($password1trim === $password2trim)
-        {
-            $password = $password1trim;
-        }
-        else
-        {
-            $password_mismatch = 'Your two passwords did not match.Please try again.';                
-        }       
-     
-    } 
-    
+        
 
     if(empty($errors)) //If everything is OK.
     {
         try
         {
-            $query = "SELECT email FROM users WHERE (email=?)";
+            $query = "SELECT id, email FROM users WHERE (id=?)";
             $q = mysqli_stmt_init($dbcon);
             mysqli_stmt_prepare($q, $query);
             //use prepared statement to ensure that only text is inserted
             //bind fields to SQL Statement
-            mysqli_stmt_bind_param($q, 's',$emailtrim);
+            mysqli_stmt_bind_param($q, 'i',$user_id);
             // execute query
             mysqli_stmt_execute($q);
-            $result = mysqli_stmt_get_result($q);
+            $user_result = mysqli_stmt_get_result($q);
+            $user_data;
             
-            if(mysqli_num_rows($result) === 1 )
-            {
+            if(mysqli_num_rows($user_result) == 1 )
+            {      
+                $user_data = mysqli_fetch_assoc($user_result);
+                $id = $user_data['id'];
                 
-
-                $query = "SELECT user_id, email FROM users_register WHERE (email=?)";
+                //Check if another user with the email exists
+                $query = "SELECT id, email FROM users WHERE (email=?)";
                 $q = mysqli_stmt_init($dbcon);
                 mysqli_stmt_prepare($q, $query);
                 //use prepared statement to ensure that only text is inserted
@@ -73,59 +78,68 @@
                 mysqli_stmt_execute($q);
                 $result = mysqli_stmt_get_result($q);
 
-                if(mysqli_num_rows($result) === 0 )
-                {
-                    //Register the user in the database...
-                    //Hash password current 60 characters but can increase
-                    $hashed_passcode = password_hash($password, PASSWORD_DEFAULT);
-                    //require('mysqli_connect.php'); //Connect to the db.
+                $row = mysqli_fetch_assoc($result);
+               
+                if(mysqli_num_rows($result) == 0 || (mysqli_num_rows($result) == 1 && $row['id'] == $id) )
+                {                
                     //Make the query:
-                    $query = "INSERT INTO users_register (user_id, email, password)";                
-                    $query .= "VALUES(' ', ?, ?)";
+                    $query = "UPDATE users SET name = ?, email = ? WHERE id = ?;";                
                     $q = mysqli_stmt_init($dbcon);
                     mysqli_stmt_prepare($q, $query);
                     //use prepared statement to ensure that only text is inserted
                     //bind fields to SQL Statement
-                    
-                    mysqli_stmt_bind_param($q, 'ss',$emailtrim, $hashed_passcode);
+
+                    mysqli_stmt_bind_param($q, 'ssi', $nametrim, $emailtrim, $id );
                     // execute query
                     mysqli_stmt_execute($q);
 
-                    if(mysqli_stmt_affected_rows($q) == 1) //One record inserted
+                    
+                    if(mysqli_stmt_affected_rows($q) === -1) //Query error
                     {
 
-                        header("location:../../index.php");                    
-                    }
-                    else //If it did not run OK.
-                    {                            
-                        //Debugging message below do not use in production
-                        //echo '<p>' . mysqli_error($dbcon) . '<br><br>Query: ' . $query . '</p>';
+                         //Debugging message below do not use in production
+                        echo '<p>' . mysqli_error($dbcon) . '<br><br>Query: ' . $query . mysqli_stmt_affected_rows($q) .'</p>';
 
                         //Public message:
                         $internal_error = "The system is busy please try later.";
 
                         mysqli_close($dbcon); // Close the database connection.
                         //exit();
-                    }
+                    }    
+                    else
+                    {
+                        $previous_email = $user_data['email'];
+                         // Update the email in the users register table
+                        //Make the query:
+                         $query = "UPDATE users_register SET  email = ? WHERE email = ?";                
+                         $q = mysqli_stmt_init($dbcon);
+                         mysqli_stmt_prepare($q, $query);
+                         //use prepared statement to ensure that only text is inserted
+                         //bind fields to SQL Statement
 
+                         mysqli_stmt_bind_param($q, 'ss', $emailtrim, $previous_email );
+                         // execute query
+                         mysqli_stmt_execute($q);
+
+                          //Public message:
+                         $success = "User updated successfully.";                                    
+
+                         mysqli_close($dbcon); // Close the database connection.
+                    }  
                 }
                 else
                 {
-                    //Public message:
-                    $user_exists = "You are already registered.";
-                                    
-                                    
-                    mysqli_close($dbcon); // Close the database connection.
-                    
-                    //exit();
-                }
+                      //Public message:
+                     $internal_error = "The email address is taken.";                                    
 
+                     mysqli_close($dbcon); // Close the database connection.
+                }            
                 
             }
             else
             {
                 //Public message:
-                $internal_error = "Your details are not found. Contact the Apple Farm.";
+                $internal_error = "User does not exist";
                                 
                                 
                 mysqli_close($dbcon); // Close the database connection.
