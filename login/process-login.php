@@ -59,9 +59,9 @@
                         $_SESSION['role'] = (int)$row[3];
 
                         if($_SESSION['role'] === 1)                        
-                            header('Location:admin/admin_dashboard.php');
+                            header('Location:../admin/admin_dashboard.php');
                         elseif($_SESSION['role'] === 2)                        
-                            header('Location: register/apple/register-apple.php');
+                            header('Location: ../register/apple/register-apple.php');
                         //Make the browser load either the members or the admin page
                     }
                     else //no password match was made
