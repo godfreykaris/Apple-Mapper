@@ -119,9 +119,19 @@
 
                             <div class="d-flex justify-content-center mt-3" style="margin-bottom:40px"> 
                                 <input id="submit" class="btn btn-primary rounded-pill" type="submit" name="submit" value="Sign Up" style="background-color:rgb(236,132,17);margin-bottom:5px;">            
-                            </div>                   
+                            </div>
                             
+                            <div class="d-flex justify-content-center mt-4 ">                                
+                                <div style="margin-bottom:20px; ">
+                                    <a href="../../login/login.php" style="color:rgb(254,244,45); text-decoration: none;">Already a member? Sign in</a>                                 
+                                </div>                                
+                            </div>
                             
+                            <div class="d-flex justify-content-center mb-4">
+                                <a href="../index.php">
+                                    <button class="btn btn-primary rounded-pill" type="button" name="home" style="background-color:rgb(236,132,17);margin-bottom:5px;">Home</button>
+                                </a>
+                            </div>
                                     
                         </form>
                     </div>

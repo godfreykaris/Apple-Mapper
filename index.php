@@ -22,6 +22,42 @@
         ?>       
 
         <noscript><h3 style="text-align:center">Your browser does not support JavaScript!<br>Enable JavaScript in your browser.</h3></noscript> 
+
+        <style>
+        #about-section {
+            padding: 20px; /* Add some spacing around the content */
+            background-color: #f8f8f8; /* Set a light background color */
+            border-radius: 10px; /* Add rounded corners to the div */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow for depth */
+            max-width: 800px; /* Limit the maximum width of the content for readability */
+            margin: 0 auto; /* Center the div horizontally */
+        }
+
+        h2 {
+            font-size: 40px;
+            font-weight: bold;
+            color: #0e0f0e;
+            text-transform: uppercase;
+            margin: 0;
+            text-decoration: underline;
+            text-align: center;
+        }
+
+        p {
+            font-size: 18px; /* Increase the font size for better readability */
+            line-height: 1.5; /* Add some line spacing for better legibility */
+            color: black; /* Set the paragraph text color */
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* Style the first paragraph differently to make it stand out */
+        p:first-child {
+            font-size: 18px; /* Larger font size for the first paragraph */
+            font-weight: bold; /* Make it bold for emphasis */
+            color: #000; /* Set a darker color for the first paragraph */
+        }
+</style>
+
         
     </head>
     <body style="background-color:rgb(26, 255, 26)"> 
@@ -74,24 +110,18 @@
                 </div>
             </div>
 
-            <div class="container about-me" id="about-section">
-                <div class="row justify-content-center align-items-center">
-                    <div class="about-me-text">
-                        <h2 class="text-center" style="text-emphasis-color: white;">About</h2>
-                        <p>Welcome to our Apple Farming Project! Our journey into the world of apple farming began in the year 2020 when we embarked on an ambitious endeavor to cultivate apples on a sprawling 80-acre piece of land. Nestled in the picturesque surroundings of Moi University, our farm has since become a hub of innovation, sustainability, and agricultural excellence.</p>
+            
+            <div id="about-section">
+                    <h2>About Us</h2>
 
-                        <p>Our commitment to apple farming goes beyond mere cultivation; it's a dedication to quality, sustainability, and community. We believe that apples not only provide a delicious and nutritious source of food but also serve as a symbol of growth and abundance.</p>
-
-                        <p>Over the years, we have meticulously cared for our apple trees, nurturing them from tender seedlings into thriving orchards. Our practices include careful planting, grafting, and continuous monitoring to ensure the health and vitality of our apple trees. We employ cutting-edge technology and scientific expertise to optimize every aspect of our farming process, from soil management to pest control.</p>
-
-                        <p>But our story is not just about apples; it's also about community. We are proud to be part of the vibrant Moi University community, where we collaborate with fellow farmers, researchers, and enthusiasts. Through knowledge sharing and community engagement, we have built a network of individuals who are equally passionate about sustainable agriculture and the bountiful harvests it can yield.</p>
-
-                        <p>Our apple farming journey has been a rewarding one, marked by challenges and triumphs alike. We invite you to join us on this exciting adventure as we continue to explore new horizons in apple farming. Whether you are a fellow farmer, an apple enthusiast, or simply curious about the art of cultivating this beloved fruit, our project is open to all.</p>
-
-                        <p>Thank you for being a part of our story. Together, we aim to make our apple farm not just a place of cultivation but a symbol of growth, innovation, and a greener, healthier future.</p>
-                    </div>
-                </div>              
-            </div>
+                    <p>Welcome to our Apple Farming Project! Our journey into the world of apple farming began in the year 2020 when we embarked on an ambitious endeavor to cultivate apples on a sprawling 80-acre piece of land. Nestled in the picturesque surroundings of Moi University, our farm has since become a hub of innovation, sustainability, and agricultural excellence.</p>
+                    <p>Our commitment to apple farming goes beyond mere cultivation; it's a dedication to quality, sustainability, and community. We believe that apples not only provide a delicious and nutritious source of food but also serve as a symbol of growth and abundance.</p>
+                    <p>Over the years, we have meticulously cared for our apple trees, nurturing them from tender seedlings into thriving orchards. Our practices include careful planting, grafting, and continuous monitoring to ensure the health and vitality of our apple trees. We employ cutting-edge technology and scientific expertise to optimize every aspect of our farming process, from soil management to pest control.</p>
+                    <p>But our story is not just about apples; it's also about community. We are proud to be part of the vibrant Moi University community, where we collaborate with fellow farmers, researchers, and enthusiasts. Through knowledge sharing and community engagement, we have built a network of individuals who are equally passionate about sustainable agriculture and the bountiful harvests it can yield.</p>
+                    <p>Our apple farming journey has been a rewarding one, marked by challenges and triumphs alike. We invite you to join us on this exciting adventure as we continue to explore new horizons in apple farming. Whether you are a fellow farmer, an apple enthusiast, or simply curious about the art of cultivating this beloved fruit, our project is open to all.</p>
+                    <p>Thank you for being a part of our story. Together, we aim to make our apple farm not just a place of cultivation but a symbol of growth, innovation, and a greener, healthier future.</p>
+            </div>              
+            
 
             <div class="d-flex justify-content-center mt-4 about-me mt-5 mb-5">
                 <div class="row">
@@ -119,7 +149,7 @@
                                 <div class="col-md-5 col-12">
                                     <span style="color: rgb(26, 255, 26); text-decoration: underline;">Quick Links</span>
                                     <a href="#" class="text-white d-block text-decoration-none">Home</a>
-                                    <a href="/about/about.php" class="text-white d-block text-decoration-none">About</a>
+                                    <a href="#about-section" class="text-white d-block text-decoration-none">About</a>
                                 </div>
                                 
                                 <div class="col-md-5 col-12" id="contact">

@@ -2,7 +2,7 @@
   <nav id="main_navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
       <a class="navbar-brand" href="">
-        <img src="applemapper/images/logo.jpg" alt="Logo" width="30" height="30" class="d-inline-block align-top">
+        <img src="./images/logo.jpg" alt="Logo" width="30" height="30" class="d-inline-block align-top rounded">
         <b>Apple Mapper</b>
       </a>
 
@@ -18,7 +18,7 @@
           <li class="nav-item active">
             <a class="nav-link" href="/index.php">Home</a>
           </li>
-          <li class="nav-item active ml-auto">
+          <li class="nav-item active">
             <a class="nav-link" href="#contact">Contact</a>
           </li>
           <li class="nav-item active">
@@ -28,18 +28,18 @@
           <?php
             if (!$isSignedIn) {
               echo '
-                <ul class="navbar-nav" style="margin-right: 0px;">
+                <ul class="navbar-nav ml-auto"> 
                   <li class="nav-item active">
-                    <a class="nav-link" href="/login/login.php">Sign In</a>
+                    <a class="nav-link" href="./login/login.php">Sign In</a>
                   </li>
                   <li class="nav-item active">
-                    <a class="nav-link" href="/register/user/register-user.php">Sign Up</a>
+                    <a class="nav-link" href="./register/user/register-user.php">Sign Up</a>
                   </li>
                 </ul>
               ';
             } else {
               echo '
-                <ul class="navbar-nav" style="margin-right: 0px;">
+                <ul class="navbar-nav ml-auto"> 
                   <li class="nav-item active">
                     <a class="nav-link" href="#">Profile</a>
                   </li>
@@ -49,13 +49,10 @@
                 </ul>
               ';
             }
-            ?>
-
+          ?>
 
         </ul>
       </div>
     </div>
   </nav>
 </div>
-
-
