@@ -12,11 +12,11 @@ if(!isset($_SESSION['user_id']))
     {
         if($_GET['status'] == 1)
         {
-            echo "<script>alert('User deleted successfully');</script>";
+            echo "<script>alert('Apple breed deleted successfully');</script>";
         }
         else
         {
-            echo "<script>alert('You cannot delete yourself.');</script>";
+            echo "<script>alert('An error occurred.');</script>";
         }
         
     }
@@ -26,7 +26,7 @@ if(!isset($_SESSION['user_id']))
     require('../mysqli_connect.php');
 
     // Define the SQL query to count total records
-    $count_query = "SELECT COUNT(*) AS total_records FROM users";
+    $count_query = "SELECT COUNT(*) AS total_records FROM apple_breeds";
     $count_result = mysqli_query($dbcon, $count_query);
     $total_records = mysqli_fetch_assoc($count_result)['total_records'];
 
@@ -38,7 +38,7 @@ if(!isset($_SESSION['user_id']))
     $offset = ($page - 1) * $records_per_page;
     
     // Define the SQL query with LIMIT and OFFSET using prepared statements
-    $sql = "SELECT * FROM users LIMIT ?, ?";
+    $sql = "SELECT * FROM apple_breeds LIMIT ?, ?";
     $stmt = mysqli_prepare($dbcon, $sql);
     mysqli_stmt_bind_param($stmt, "ii", $offset, $records_per_page);
     mysqli_stmt_execute($stmt);
@@ -52,7 +52,7 @@ if(!isset($_SESSION['user_id']))
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Admin | View Users</title>
+        <title>Admin | View Apple Breeds</title>
         
         <link rel="icon" href="../images/apple.jpg" type="image/jpg">
         
@@ -96,8 +96,7 @@ if(!isset($_SESSION['user_id']))
             <table class="table table-bordered table-striped table-hover text-center table-primary">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
+                        <th>Breed Name</th>
                         <th colspan="2">Actions</th>
                     </tr>
                 </thead>
@@ -106,13 +105,12 @@ if(!isset($_SESSION['user_id']))
                     // Loop through the user data and display it in the table rows.
                     while ($row = mysqli_fetch_assoc($result)) {
                         echo "<tr>";
-                        echo "<td>" . $row['name'] . "</td>";
-                        echo "<td>" . $row['email'] . "</td>";
+                        echo "<td>" . $row['breed_name'] . "</td>";
                         echo "<td>";
-                        echo "<a href='edit_user.php?id=" . $row['id'] . "' class='btn btn-sm btn-primary'>Edit</a>";
+                        echo "<a href='edit_apple_breed.php?id=" . $row['id'] . "' class='btn btn-sm btn-primary'>Edit</a>";
                         echo "</td>";
                         echo "<td>";
-                        echo "<a href='delete_user.php?id=" . $row['id'] . "&name=" . $row['name'] . "' class='btn btn-sm btn-danger'>Delete</a>";
+                        echo "<a href='delete_apple_breed.php?id=" . $row['id'] . "&breed_name=" . $row['breed_name'] . "' class='btn btn-sm btn-danger'>Delete</a>";
                         echo "</td>";
                         echo "</tr>";
                     }
@@ -133,7 +131,7 @@ if(!isset($_SESSION['user_id']))
                     // Create "Previous" link
                     if ($page > 1) {
                         echo "<li class='page-item'>";
-                        echo "<a class='page-link' style='color:black;' href='view_users.php?page=" . ($page - 1) . "'>&laquo; Previous</a>";
+                        echo "<a class='page-link' style='color:black;' href='view_apple_breeds.php?page=" . ($page - 1) . "'>&laquo; Previous</a>";
                         echo "</li>";
                     }
 
@@ -141,14 +139,14 @@ if(!isset($_SESSION['user_id']))
                     for ($i = 1; $i <= $total_pages; $i++) 
                     {
                         echo "<li class='page-item" . ($page == $i ? " active" : "") . "'>";
-                        echo "<a class='page-link' href='view_users.php?page=$i'>$i</a>";
+                        echo "<a class='page-link' href='view_apple_breeds.php?page=$i'>$i</a>";
                         echo "</li>";
                     }
 
                     // Create "Next" link
                     if ($page < $total_pages) {
                         echo "<li class='page-item'>";
-                        echo "<a class='page-link' style='color:black;' href='view_users.php?page=" . ($page + 1) . "'>Next &raquo;</a>";
+                        echo "<a class='page-link' style='color:black;' href='view_apple_breeds.php?page=" . ($page + 1) . "'>Next &raquo;</a>";
                         echo "</li>";
                     }
                     ?>

@@ -2,7 +2,7 @@
 if(session_status() !== PHP_SESSION_ACTIVE) session_start();
 if(!isset($_SESSION['user_id']))
 {
-    header("Location: ../../index.php");
+    header("Location: ../index.php");
     exit();
 }
 ?>
@@ -12,7 +12,7 @@ if(!isset($_SESSION['user_id']))
 //Check that form has been submitted:
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        require_once('../../mysqli_connect.php'); //Connect to the db
+        require_once('../mysqli_connect.php'); //Connect to the db
     }
 
     $errors = array(); //Initialize an error array.
@@ -73,49 +73,85 @@ if(!isset($_SESSION['user_id']))
         
      }
 
+     $id = filter_var($_POST['id'], FILTER_VALIDATE_INT);
+
+     if ($id === false || $id <= 0) 
+     {
+         $errors[] = 'Invalid Apple ID.';
+     }
+     else
+     {
+        $idtrim = $id;
+     }
+
     if(empty($errors)) //If everything is OK.
     {
         try
         {
-            $query = "SELECT apple_id  FROM apples WHERE (apple_id=?) or (row=? and col=?)";
+            $query = "SELECT id  FROM apples WHERE (id=?)";
             $q = mysqli_stmt_init($dbcon);
             mysqli_stmt_prepare($q, $query);
             //use prepared statement to ensure that only text is inserted
             //bind fields to SQL Statement
-            mysqli_stmt_bind_param($q, 'sss',$apple_idtrim, $rowtrim, $columntrim);
+            mysqli_stmt_bind_param($q, 's',$idtrim);
             // execute query
             mysqli_stmt_execute($q);
             $result = mysqli_stmt_get_result($q);
             
-            if(mysqli_num_rows($result) == 0 )
+            if(mysqli_num_rows($result) == 1 )
             {                
-                
-                //Make the query:
-                $query = "INSERT INTO apples (id, apple_id, yop, breed_id, row, col, latitude, longitude)";                
-                $query .= "VALUES(' ', ?, ?, ?, ?, ?, ?, ?)";
+                $query = "SELECT apple_id  FROM apples WHERE (apple_id=?) or (row=? and col=?)";
                 $q = mysqli_stmt_init($dbcon);
                 mysqli_stmt_prepare($q, $query);
                 //use prepared statement to ensure that only text is inserted
                 //bind fields to SQL Statement
-                
-                mysqli_stmt_bind_param($q, 'sssssdd',$apple_idtrim, $yoptrim, $breedtrim, $rowtrim, $columntrim, $latitude, $longitude);
+                mysqli_stmt_bind_param($q, 'sss',$apple_idtrim, $rowtrim, $columntrim);
                 // execute query
                 mysqli_stmt_execute($q);
+                $result = mysqli_stmt_get_result($q);
+                $num_of_rows = mysqli_num_rows($result);
 
-                if(mysqli_stmt_affected_rows($q) == 1) //One record inserted
+                if($num_of_rows)
                 {
-                    $success = "Apple registered successfully.";                                        
+                    $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
                 }
-                else //If it did not run OK.
-                {                            
-                    //Debugging message below do not use in production
-                    //echo '<p>' . mysqli_error($dbcon) . '<br><br>Query: ' . $query . '</p>';
+                
+                if(($num_of_rows == 0) || (($num_of_rows == 1) && ($row['apple_id'] == $apple_idtrim)) )
+                {                
+                    
+                   //Make the query to update the existing apple:
+                   $query = "UPDATE apples SET yop=?, breed_id=?, row=?, col=?, latitude=?, longitude=? WHERE apple_id=?";
+                   $q = mysqli_stmt_init($dbcon);
+                   mysqli_stmt_prepare($q, $query);
+                   //use prepared statement to ensure that only text is inserted
+                                   
+                   mysqli_stmt_bind_param($q, 'ssssdds', $yoptrim, $breedtrim, $rowtrim, $columntrim, $latitude, $longitude, $apple_idtrim);
+                  
+                    if( mysqli_stmt_execute($q)) //One record inserted
+                    {
+                        $success = "Apple Edited successfully.";                                        
+                    }
+                    else //If it did not run OK.
+                    {                            
+                        //Debugging message below do not use in production
+                        //echo '<p>' . mysqli_error($dbcon) . '<br><br>Query: ' . $query . '</p>';
 
+                        //Public message:
+                        $internal_error = "The system is busy please try later.";
+
+                        mysqli_close($dbcon); // Close the database connection.
+
+                    }
+                }
+                else
+                {
                     //Public message:
-                    $internal_error = "The system is busy please try later.";
-
+                    $apple_error = "The Apple ID is already registered or there is a registered apple at the same row and column.";
+                                    
+                                    
                     mysqli_close($dbcon); // Close the database connection.
                     
+                   
                 }
 
                 
@@ -123,7 +159,7 @@ if(!isset($_SESSION['user_id']))
             else
             {
                 //Public message:
-                $apple_id_exist = "The Apple ID is already registered or there is a registered apple at the same row and column.";
+                $apple_error = "The Apple ID does not exist.";
                                 
                                 
                 mysqli_close($dbcon); // Close the database connection.
