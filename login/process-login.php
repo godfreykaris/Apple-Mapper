@@ -5,7 +5,7 @@
     {
         try
         {
-            require('mysqli_connect.php'); //Connect to the db
+            require('../mysqli_connect.php'); //Connect to the db
             
             $errors = array(); //Initialize an error array.
            

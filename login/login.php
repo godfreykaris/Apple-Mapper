@@ -37,7 +37,7 @@
         <?php
             if($_SERVER['REQUEST_METHOD'] == 'POST')
             {
-                require('./process-login.php');
+                require('process-login.php');
                 
             } // End of the main Submit conditional.
         ?>
@@ -53,7 +53,7 @@
                         <h2 style="color:rgb(236,132,17)">Login</h2>
                     </div>
                     <div class="d-flex justify-content-center">
-                        <form action="index.php" method="post" name="loginform" id="loginform" style="display: inline-block;">                        
+                        <form action="login.php" method="post" name="loginform" id="loginform" style="display: inline-block;">                        
                             <div class="row input-group mb-3">
                                 <div class="col-lg-4 input-group-append">
                                     <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Email:</span>
