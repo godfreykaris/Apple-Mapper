@@ -7,6 +7,45 @@ if(!isset($_SESSION['user_id']))
 }
 ?>
 
+<?php
+require_once('../../mysqli_connect.php'); //Connect to the db
+
+$apple_breeds = array();
+
+
+try
+     {                                      
+         $query = "SELECT * FROM apple_breeds";
+         $q = mysqli_stmt_init($dbcon);
+         mysqli_stmt_prepare($q, $query);
+         
+         // execute query
+         mysqli_stmt_execute($q);
+         $result = mysqli_stmt_get_result($q);
+             
+         if (mysqli_num_rows($result) >= 1) {
+             while ($row = mysqli_fetch_assoc($result)) {
+                 // Store the breed ID as the key and the breed name as the value in the array
+                 $apple_breeds[$row['id']] = $row['breed_name'];
+             }
+         }
+
+    } //end of try block
+ catch(Exception $e) // We finally handle any problems here
+ {
+    //  print "An Exception occured. Message: " . $e->getMessage();
+     echo htmlspecialchars('An error occurred! Please contact the administrator.', ENT_QUOTES);
+ }
+ catch(Error $e)
+ {
+    //  print "An Error occured. Message: " . $e->getMessage();
+     echo htmlspecialchars('An error occurred! Please contact the administrator.', ENT_QUOTES);
+ }
+
+?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -29,7 +68,10 @@ if(!isset($_SESSION['user_id']))
          <!-- Navigation -->
          <div class="container-fluid sticky-top" style="background-color:rgb(4,38,84);">
 
-            <nav class="navbar navbar-expand-md text-light " role="navigation" id="main_navbar">
+         <h5 class="text-center text-light d-md-none">Apple Mapper</h5>
+
+         <nav class="navbar navbar-expand-md text-light " role="navigation" id="main_navbar">
+             <h5 class="text-center text-light d-none d-md-block">Apple Mapper</h5>
 
                     <button class="navbar-toggler" type="button" style="color:rgb(236,132,17)" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         Menu
@@ -149,27 +191,21 @@ if(!isset($_SESSION['user_id']))
 
 
                             <div class="row input-group mb-3">
-
->>>>>>> origin/main
                                 <div class="col-lg-4 input-group-append">
                                     <span class="input-group-text" style="color:rgb(236,132,17);background-color:rgb(4,38,84); border:none;margin-right:10px;margin-bottom:5px;">Breed:</span>
                                 </div>
                                 <div class="col-lg-8">
-<<<<<<< HEAD
                                     <select class="form-select" id="breed" name="breed" required>
-                                        <option value="" disabled selected>Select Breed</option>
+                                        <option value="">Select Breed</option>
+                                        <?php
+                                        foreach ($apple_breeds as $breedId => $breedName) {
+                                            $selected = (isset($_POST['breed']) && $_POST['breed'] == $breedId) ? 'selected' : '';
+                                            echo "<option value=\"$breedId\" $selected>$breedName</option>";
+                                        }
+                                        ?>
                                     </select>
                                 </div>
-                            </div>
-
-=======
-                                    <input type="text" class="form-control" id="breed" name="breed" placeholder="Enter breed"
-                                                maxlength="20" required
-                                                value="<?php if(isset($_POST['breed'])) echo htmlspecialchars($_POST['breed'], ENT_QUOTES); ?>">
-                                </div>                 
-
-                            </div>   
->>>>>>> origin/main
+                            </div> 
                             
                             <div class="row input-group mb-3">
 
