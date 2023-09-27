@@ -28,7 +28,10 @@ if(!isset($_SESSION['user_id']))
          <!-- Navigation -->
          <div class="container-fluid sticky-top" style="background-color:rgb(4,38,84);">
 
+         <h5 class="text-center text-light d-md-none">Apple Mapper</h5>
+
             <nav class="navbar navbar-expand-md text-light " role="navigation" id="main_navbar">
+                <h5 class="text-center text-light d-none d-md-block">Apple Mapper</h5>
 
                     <button class="navbar-toggler" type="button" style="color:rgb(236,132,17)" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         Menu
@@ -58,6 +61,25 @@ if(!isset($_SESSION['user_id']))
                     
                     <a href="add_user.php" class="btn btn-primary">Add User</a>
                     <a href="view_users.php" class="btn btn-primary">View Users</a>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Apples</h5>
+                    <p class="card-text">Edit or Delete Apples in View Apples</p>
+                    
+                    <a href="../apples/view-apples.php" class="btn btn-primary">View Apples</a>
+                </div>
+            </div>
+
+            <div class="card mb-3">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Apple Breeds</h5>
+                    <p class="card-text">Add, Edit or Delete Apple breeds</p>
+
+                    <a href="add_apple_breed.php" class="btn btn-primary">Add Apple Breed</a>
+                    <a href="view_apple_breeds.php" class="btn btn-primary">View Apple Breeds</a>
                 </div>
             </div>
 

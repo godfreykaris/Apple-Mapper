@@ -11,30 +11,28 @@ if(!isset($_SESSION['user_id']))
 require_once('../mysqli_connect.php');
 
 // Initialize variables
-$user_id = null;
-$name = '';
-$email = '';
+$breed_id = null;
+$breed_name = '';
 
 // Check if 'id' parameter is present in the URL
 if (isset($_GET['id'])) {
-    $user_id = $_GET['id'];
+    $breed_id = $_GET['id'];
 
-    // Retrieve the user's information from the database
-    $sql = "SELECT * FROM users WHERE id = ?";
+    // Retrieve the breed's information from the database
+    $sql = "SELECT * FROM apple_breeds WHERE id = ?";
     $stmt = mysqli_prepare($dbcon, $sql);
-    mysqli_stmt_bind_param($stmt, 'i', $user_id);
+    mysqli_stmt_bind_param($stmt, 'i', $breed_id);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    // Check if user with the specified id exists
+    // Check if breed with the specified id exists
     if ($row = mysqli_fetch_assoc($result)) {
-        $name = $row['name'];
-        $email = $row['email'];
+        $breed_name = $row['breed_name'];
     } 
     else
     {
-        // User does not exist, display an alert and exit
-        echo "<script>alert('User with ID $user_id does not exist.')</script>";
+        // breed does not exist, display an alert and exit
+        echo "<script>alert('Breed with ID $breed_id does not exist.')</script>";
         exit; // Exit the script
     }
 }
@@ -48,7 +46,7 @@ if (isset($_GET['id'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin | Edit User</title>
+    <title>Admin | Edit Apple Breed</title>
     <link rel="icon" href="../images/apple.jpg" type="image/jpg">
     <?php
     $path = __DIR__;
@@ -88,7 +86,7 @@ if (isset($_GET['id'])) {
  <?php
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-        require('process_edit_user.php');
+        require('process_edit_apple_breed.php');
     } // End of the main Submit conditional.
  ?>
 
@@ -104,45 +102,31 @@ if (isset($_GET['id'])) {
             </div>
             <div class="d-flex justify-content-center"
                  style="margin-top: 10px; margin-bottom: 10px;">
-                <h2 style="color: rgb(236, 132, 17)">Edit User</h2>
+                <h2 style="color: rgb(236, 132, 17)">Edit Breed</h2>
             </div>
             <div class="d-flex justify-content-center">
-                <form action="edit_user.php" method="post"
-                      name="user_form" id="user_form" style="display: inline-block;">
-                    <!-- Add or Edit User Fields -->
+                <form action="edit_apple_breed.php?id=<?php echo htmlspecialchars($breed_id, ENT_QUOTES) ?>" method="post"
+                      name="breed_form" id="breed_form" style="display: inline-block;">
+                    <!-- Add or Edit breed Fields -->
                     <div class="row input-group mb-3">
                         <div class="col-lg-4 input-group-append">
                             <span class="input-group-text"
-                                  style="color: rgb(236, 132, 17); background-color: rgb(4, 38, 84); border: none; margin-right: 10px; margin-bottom: 5px;">Name:</span>
+                                  style="color: rgb(236, 132, 17); background-color: rgb(4, 38, 84); border: none; margin-right: 10px; margin-bottom: 5px;">Breed Name:</span>
                         </div>
                         <div class="col-lg-8">
-                            <input type="text" class="form-control" id="name" name="name"
-                                   placeholder="Enter Name" maxlength="60" required
-                                   value="<?php if (isset($_POST['name'])) echo htmlspecialchars($_POST['name'], ENT_QUOTES); else echo htmlspecialchars($name, ENT_QUOTES); ?>">
+                            <input type="text" class="form-control" id="breed_name" name="breed_name"
+                                   placeholder="Enter Breed Name" maxlength="60" required
+                                   value="<?php if (isset($_POST['breed_name'])) echo htmlspecialchars($_POST['breed_name'], ENT_QUOTES); else echo htmlspecialchars($breed_name, ENT_QUOTES); ?>">
                         </div>
                     </div>
-                    <div class="row input-group mb-3">
-                        <div class="col-lg-4 input-group-append">
-                            <span class="input-group-text"
-                                  style="color: rgb(236, 132, 17); background-color: rgb(4, 38, 84); border: none; margin-right: 10px; margin-bottom: 5px;">Email:</span>
-                        </div>
-                        <div class="col-lg-8">
-                            <input type="text" class="form-control" id="email" name="email"
-                                   placeholder="Enter Email" maxlength="60" required
-                                   value="<?php if (isset($_POST['email'])) echo htmlspecialchars($_POST['email'], ENT_QUOTES); else echo htmlspecialchars($email, ENT_QUOTES); ?>">
-                        </div>
-                    </div>
-                    <!-- End of Add or Edit User Fields -->
+                    
+                    <!-- End of Add or Edit breed Fields -->
 
                     <div class="text-center" style="color: red;">
-                        <?php if (isset($invalid_name)) echo $invalid_name;
-                        $invalid_name = ""; ?>
+                        <?php if (isset($invalid_breed_name)) echo $invalid_breed_name;
+                        $invalid_breed_name = ""; ?>
                     </div>
 
-                    <div class="text-center" style="color: red;">
-                        <?php if (isset($invalid_email)) echo $invalid_email;
-                        $invalid_email = ""; ?>
-                    </div>
 
                     <div class="text-center" style="color: red;">
                         <?php
@@ -168,7 +152,7 @@ if (isset($_GET['id'])) {
                                style="background-color: rgb(236, 132, 17); margin-bottom: 5px;">
                     </div>
 
-                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($user_id, ENT_QUOTES); ?>">
+                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($breed_id, ENT_QUOTES); ?>">
 
 
                 </form>
